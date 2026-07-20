@@ -35,7 +35,7 @@ app.use('/api/movies', movieRoutes);
 
 // Serve static frontend files in production (only if client/dist exists)
 if (isProduction) {
-  const frontendPath = path.join(__dirname, 'client', 'dist');
+  const frontendPath = path.join(__dirname, '..', 'client', 'dist');
   try {
     app.use(express.static(frontendPath));
     app.use((req, res) => {
