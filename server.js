@@ -32,7 +32,7 @@ app.use('/api/movies', movieRoutes);
 // Serve static frontend files in production 
 if (isProduction) {
   // Direct absolute path to your hosting public directory
-  const frontendPath = '/home/bionicstripes/public_html';
+  const frontendPath = '/home/bionicstripes/public_html/dist'; 
   
   try {
     app.use(express.static(frontendPath));
