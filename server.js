@@ -7,12 +7,8 @@ const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://bionicstripes.cloud';
 
-// CORS
-if (isProduction) {
-  app.use(cors({ origin: FRONTEND_URL, credentials: true }));
-} else {
-  app.use(cors({ origin: FRONTEND_URL, credentials: true }));
-}
+// CORS Configuration
+app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 
 app.use(express.json());
 
@@ -33,16 +29,18 @@ app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/movies', movieRoutes);
 
-// Serve static frontend files in production (only if client/dist exists)
+// Serve static frontend files in production 
 if (isProduction) {
-  const frontendPath = path.join(__dirname, '..', 'client', 'dist');
+  // Direct absolute path to your hosting public directory
+  const frontendPath = '/home/bionicstripes/public_html';
+  
   try {
     app.use(express.static(frontendPath));
     app.use((req, res) => {
       res.sendFile(path.join(frontendPath, 'index.html'));
     });
   } catch (e) {
-    console.log('Frontend dist not found, serving API only');
+    console.log('Frontend directory not found, serving API only');
   }
 }
 
