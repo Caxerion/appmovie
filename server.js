@@ -33,14 +33,17 @@ app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/movies', movieRoutes);
 
-// Serve static frontend files in production
+// Serve static frontend files in production (only if client/dist exists)
 if (isProduction) {
   const frontendPath = path.join(__dirname, 'client', 'dist');
-  app.use(express.static(frontendPath));
-  
-  app.use((req, res) => {
-    res.sendFile(path.join(frontendPath, 'index.html'));
-  });
+  try {
+    app.use(express.static(frontendPath));
+    app.use((req, res) => {
+      res.sendFile(path.join(frontendPath, 'index.html'));
+    });
+  } catch (e) {
+    console.log('Frontend dist not found, serving API only');
+  }
 }
 
 // Error handler
