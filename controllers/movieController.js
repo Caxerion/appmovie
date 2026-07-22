@@ -7,7 +7,6 @@ getAll: async(req, res, next) => {
         const [rows] = await pool.execute(
             'SELECT m.*, name AS categoryName FROM movies m LEFT JOIN categories c ON m.categoryId = c.id ORDER BY m.id DESC');
             res.json(rows);
-        res.json(rows);
     }catch(err) {next(err)}
 },
 
